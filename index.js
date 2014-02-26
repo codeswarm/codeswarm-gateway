@@ -5,7 +5,7 @@ process.on('uncaughtException', onProcessUncaughtException);
 require('colors');
 
 var argv           = require('minimist')(process.argv.slice(2));
-var Gateway        = require('gateway');
+var Gateway        = require('./gateway');
 var GatewayOptions = require('./gateway_options');
 var Listener       = require('./listener');
 
