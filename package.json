@@ -1,0 +1,24 @@
+{
+  "name": "codeswarm-gateway",
+  "version": "0.0.1",
+  "description": "Codeswarm Generic Command-line Gateway",
+  "main": "index.js",
+  "bin": {
+    "codeswarm-gateway": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/codeswarm/codeswarm-gateway.git"
+  },
+  "author": "pgte",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codeswarm/codeswarm-gateway/issues"
+  },
+  "homepage": "https://github.com/codeswarm/codeswarm-gateway",
+  "dependencies": {
+    "minimist": "0.0.8",
+    "gateway": "~0.1.1",
+    "colors": "~0.6.2"
+  }
+}
