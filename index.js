@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+var Injector = require('./injector');
+
 process.on('uncaughtException', onProcessUncaughtException);
 
 require('colors');
@@ -21,13 +23,25 @@ var types = argv.type || 'php';
 if (!Array.isArray(types)) types = [types];
 
 
+/// inject
+var injections = argv.inject;
+if (! injections) injections = [];
+else if (! Array.isArray(injections)) injections = [injections];
+var injector = new Injector(injections);
+
+console.log('INJECTOR:', injector);
+
 /// Gateway
 var options = GatewayOptions(types);
 var gateway = Gateway(docroot, options);
 
 
 /// Server
-var listener = Listener(gateway, docroot);
+var listenerOptions = {
+  injector: injector
+};
+
+var listener = Listener(gateway, docroot, listenerOptions);
 var server = require('http').createServer(listener);
 
 
