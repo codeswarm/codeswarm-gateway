@@ -18,11 +18,6 @@
     },
 
     listen: function (runner) {
-      var oldEmit = runner.emit;
-      runner.emit = function(ev) {
-        console.log('emitting', ev);
-        oldEmit.apply(runner, arguments);
-      };
 
       runner.on('test:start', function() {
         state.results.results.total += 1;
