@@ -10,13 +10,16 @@
 
   QUnit.log(function(res) {
     if (res && ! res.result) {
-      state.results.errors.push(JSON.stringify(res));
+      var err = JSON.stringify(res);
+      console.log({error: err})
+      state.results.errors.push(err);
     }
   });
 
   QUnit.done(function(results){
     state.ended = true;
     state.results.results = results;
+    console.log(state);
   });
 
 })();

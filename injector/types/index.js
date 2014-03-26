@@ -1,1 +1,2 @@
-exports.qunit = require('./qunit');
+exports.qunit  = require('./qunit');
+exports.Buster = require('./buster');
