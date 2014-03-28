@@ -31,9 +31,7 @@ function proxy(port, Injector) {
           return res.end(err.message);
         }
         res.writeHead(_res.statusCode || 200, _res.headers);
-        console.log('INJECTOR:', injector);
         body = injector.transform(req.url, body);
-        console.log('reply body:', body);
         res.end(body);
       });
 
