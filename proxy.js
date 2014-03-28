@@ -2,9 +2,11 @@ var http    = require('http');
 var request = require('request');
 var Proxy   = require('http-proxy');
 
+var server_listen = require('./server_listen');
+
 module.exports = proxy;
 
-function proxy(port, Injector) {
+function proxy(ports, proxyPort, Injector) {
   var server = http.createServer(listener);
 
   var proxy = Proxy.createProxyServer({});
@@ -22,7 +24,7 @@ function proxy(port, Injector) {
       console.log('proxying and injecting %s', req.url);
 
       request({
-        url: 'http://localhost:' + port + req.url,
+        url: 'http://localhost:' + proxyPort + req.url,
         headers: req.headers
       }, function(err, _res, body) {
         if (err) {
@@ -38,13 +40,14 @@ function proxy(port, Injector) {
     } else {
 
       proxy.web(req, res, {
-        target: 'http://localhost:' + port
+        target: 'http://localhost:' + proxyPort
       });
 
     }
   }
 
-  server.listen(8080, function() {
-    console.log('Gateway server on docroot %j listening on port %d'.green, 'PROXY:' + port, port);
+  server_listen(server, ports, function(err, port) {
+    if (err) throw err;
+    console.log('Gateway server on docroot %j listening on port %d'.green, 'PROXY:' + proxyPort, port);
   });
 }

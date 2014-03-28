@@ -26,12 +26,16 @@ var injector = new Injector(injections);
 
 console.log('INJECTOR:', injector);
 
+/// ports
+
+var ports = argv.ports || '8080';
+ports = ports.split(',');
 
 /// proxy
 
 var proxyPort = argv.proxy;
 if (proxyPort) {
-  proxy(proxyPort, injector);
+  proxy(ports, proxyPort, injector);
   return; // stop setup, we have what we need
 }
 
@@ -58,11 +62,11 @@ var server = require('http').createServer(listener);
 
 /// Listen
 
-var port = Number(argv.port) || 8080;
-server.listen(8080, function() {
-  console.log('Gateway server on docroot %j listening on port %d'.green, docroot, port);
-});
 
+server_listen(server, ports, function(err, port) {
+  if (err) error(err);
+  else console.log('Gateway server on docroot %j listening on port %d'.green, docroot, port);
+});
 
 /// Misc
 
