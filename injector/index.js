@@ -37,6 +37,5 @@ I.parseInjection = function parseInjection(injection) {
 }
 
 I.match = function match(url) {
-  var injector = this._map[url];
-  return injector;
+  return this._map[url];
 };

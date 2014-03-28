@@ -19,6 +19,8 @@
   "dependencies": {
     "minimist": "0.0.8",
     "colors": "~0.6.2",
-    "node-static": "~0.7.3"
+    "node-static": "~0.7.3",
+    "http-proxy": "~1.0.3",
+    "request": "~2.34.0"
   }
 }

@@ -31,8 +31,14 @@ function inject(req, res, docRoot) {
       return;
     }
 
-    file = file.replace(/(.*)<\/body>/, "$1" + scripts.join('') + '</body>');
-
-    res.end(file);
+    res.end(transform(req.url, file));
   }
+}
+
+/// transform
+
+exports.transform = transform;
+
+function transform(url, body) {
+  return body.replace(/(.*)<\/body>/, "$1" + scripts.join('') + '</body>');
 }

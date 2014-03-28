@@ -10,17 +10,12 @@ var argv           = require('minimist')(process.argv.slice(2));
 var Gateway        = require('./gateway');
 var GatewayOptions = require('./gateway_options');
 var Listener       = require('./listener');
+var proxy          = require('./proxy');
 
 /// docroot
 
 var docroot = argv.docroot;
 if (!docroot) return error('Must supply --docroot argument containing the root directory');
-
-
-/// file types
-
-var types = argv.type || 'php';
-if (!Array.isArray(types)) types = [types];
 
 
 /// inject
@@ -30,6 +25,22 @@ else if (! Array.isArray(injections)) injections = [injections];
 var injector = new Injector(injections);
 
 console.log('INJECTOR:', injector);
+
+
+/// proxy
+
+var proxyPort = argv.proxy;
+if (proxyPort) {
+  proxy(proxyPort, injector);
+  return; // stop setup, we have what we need
+}
+
+
+/// file types
+
+var types = argv.type || 'php';
+if (!Array.isArray(types)) types = [types];
+
 
 /// Gateway
 var options = GatewayOptions(types);
