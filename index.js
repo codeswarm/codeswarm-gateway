@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var Injector = require('./injector');
+var server_listen = require('./server_listen');
 
 process.on('uncaughtException', onProcessUncaughtException);
 
