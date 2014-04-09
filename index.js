@@ -30,7 +30,7 @@ console.log('INJECTOR:', injector);
 
 /// ports
 
-var ports = argv.ports || '8080';
+var ports = argv.ports || argv.port || '8080';
 ports = ports.split(',');
 
 /// proxy
@@ -73,8 +73,8 @@ server_listen(server, ports, function(err, port) {
 /// Misc
 
 
-function error(msg) {
-  console.error(msg.red);
+function error(err) {
+  console.error('Error:' + (err.stack || err.message || err));
   process.exit(1);
 }
 
