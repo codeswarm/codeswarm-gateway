@@ -16,7 +16,7 @@ var scripts = urls.map(function(scriptPath) {
 
 exports.inject = inject;
 
-function inject(req, res, docRoot) {
+function inject(req, res, docRoot, options) {
   if (urls.indexOf(req.url) >= 0) {
     var p = path.join(__dirname, path.basename(req.url));
     fs.createReadStream(p).pipe(res);
@@ -31,7 +31,9 @@ function inject(req, res, docRoot) {
       return;
     }
 
-    res.end(transform(req.url, file));
+    var reply = transform(req.url, file, options);
+    console.log('injecting reply to %s %s: %j', req.method, req.url, reply);
+    res.end(reply);
   }
 }
 
@@ -39,6 +41,18 @@ function inject(req, res, docRoot) {
 
 exports.transform = transform;
 
-function transform(url, body) {
-  return body.replace(/(.*)<\/body>/, "$1" + scripts.join('') + '</body>');
+function transform(url, body, options) {
+
+  console.log('TRANSFORM OPTIONS', options);
+
+  var postResultsURL = options.postResultsURL;
+  var _scripts = scripts.slice(0);
+  if (postResultsURL) {
+    _scripts.unshift(injectPostResultsURLScript(postResultsURL));
+  }
+  return body.replace(/(.*)<\/body>/, "$1" + _scripts.join('') + '</body>');
+}
+
+function injectPostResultsURLScript(postResultsURL) {
+  return '<script>__codeswarm_postResultsURL = "' + postResultsURL + '";</script>'
 }
