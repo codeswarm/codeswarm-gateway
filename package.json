@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git://github.com/codeswarm/codeswarm-gateway.git"
   },
-  "author": "pgte",
-  "license": "MIT",
+  "author": "CodeSwarm <hello@codeswarm.com>",
+  "license": "Apache 2",
   "bugs": {
     "url": "https://github.com/codeswarm/codeswarm-gateway/issues"
   },
@@ -22,5 +22,14 @@
     "node-static": "~0.7.3",
     "http-proxy": "~1.0.3",
     "request": "~2.34.0"
-  }
+  },
+  "devDependencies": {
+		"mocha": "^1.18.2"
+	},
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha -u tdd"
+  },
+  "keywords": [
+    "codeswarm"
+  ]
 }
