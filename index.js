@@ -26,11 +26,9 @@ if (! injections) injections = [];
 else if (! Array.isArray(injections)) injections = [injections];
 var injector = new Injector(injections);
 
-console.log('INJECTOR:', injector);
-
 /// ports
 
-var ports = argv.ports || '8080';
+var ports = argv.ports || argv.port || '8080';
 ports = ports.split(',');
 
 /// proxy
@@ -48,6 +46,10 @@ var types = argv.type || 'php';
 if (!Array.isArray(types)) types = [types];
 
 
+/// post results url
+var postResultsURL = argv['post-results-url']
+
+
 /// Gateway
 var options = GatewayOptions(types);
 var gateway = Gateway(docroot, options);
@@ -55,7 +57,8 @@ var gateway = Gateway(docroot, options);
 
 /// Server
 var listenerOptions = {
-  injector: injector
+  injector: injector,
+  postResultsURL: postResultsURL
 };
 
 var listener = Listener(gateway, docroot, listenerOptions);
@@ -73,8 +76,8 @@ server_listen(server, ports, function(err, port) {
 /// Misc
 
 
-function error(msg) {
-  console.error(msg.red);
+function error(err) {
+  console.error('Error:' + (err.stack || err.message || err));
   process.exit(1);
 }
 
